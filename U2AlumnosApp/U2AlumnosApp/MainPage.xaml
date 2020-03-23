@@ -1,16 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-              xmlns:local="clr-namespace:U2AlumnosApp"
+             xmlns:local="clr-namespace:U2AlumnosApp;assembly=U2AlumnosApp"
              xmlns:fontawesome="clr-namespace:FontAwesome"
              x:Class="U2AlumnosApp.MainPage">
 
+
+
+    <MasterDetailPage.Master>
+        <local:MasterPage x:Name="masterPage" />
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <local:AvisosPage/>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+
     
+    <!--USO DE FONTAWESOME-->
     
-    <StackLayout BackgroundColor="#333" Padding="30">
+    <!--<StackLayout BackgroundColor="#333" Padding="30">
 
         <Label Text="{x:Static fontawesome:FontAwesomeIcons.Angular}"
         FontFamily="{StaticResource FontAwesomeBrands}"  FontSize="100" TextColor="DarkGray"/>
@@ -21,5 +35,5 @@
         <Label Text="{x:Static fontawesome:FontAwesomeIcons.Clock}"
         FontFamily="{StaticResource FontAwesomeRegular}"  FontSize="100" TextColor="DarkGray"/>
 
-    </StackLayout>
-</ContentPage>
+    </StackLayout>-->
+</MasterDetailPage>
