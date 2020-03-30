@@ -6,6 +6,10 @@
              mc:Ignorable="d"
              x:Class="U2AlumnosApp.App">
     <Application.Resources>
+        <Style TargetType="NavigationPage">
+            <Setter Property="BarBackgroundColor" Value="#2BE08D "/>
+            <Setter Property="BarTextColor" Value="#FFF"/>
+        </Style>
         <ResourceDictionary>
             <OnPlatform x:TypeArguments="x:String" 
                 x:Key="FontAwesomeBrands">

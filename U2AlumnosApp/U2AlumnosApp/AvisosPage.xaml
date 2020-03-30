@@ -4,14 +4,15 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="U2AlumnosApp.AvisosPage">
+             x:Class="U2AlumnosApp.AvisosPage"
+             >
     
     <!--FEED DE MENSAJES ENVIADOS-->
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout >
+         
+            <Image Source="vacioPapalote" HeightRequest="200"  Margin="40,80,0,30" WidthRequest="200"></Image>
+            <Label Text="No tienes avisos nuevos por ahora" HorizontalTextAlignment="Center" TextColor="#B3B3B3" FontSize="Subtitle"></Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
