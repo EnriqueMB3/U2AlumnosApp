@@ -34,17 +34,11 @@ namespace U2AlumnosApp.Models
             {
                 HttpClient httpClient = new HttpClient();
 
-                InicioSesionAlumno inicioSesionAlumno = new InicioSesionAlumno
-                {
-                    clave = clave,
-                    password = password
-                };
-
-         
-                string alumno = JsonConvert.SerializeObject(inicioSesionAlumno);
+                Dictionary<string, string> data = new Dictionary<string, string>() { { "clave", clave }, {"password", password } };
 
                 var json = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/login",
-                    new StringContent(alumno, Encoding.UTF8, "application/json"));
+                    new FormUrlEncodedContent(data));
+
                 json.EnsureSuccessStatusCode();
 
 
@@ -53,7 +47,6 @@ namespace U2AlumnosApp.Models
 
                     Insert(alumnoReceived);
         
-             
             }
             else
             {
