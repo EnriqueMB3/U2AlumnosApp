@@ -21,21 +21,50 @@ namespace U2AlumnosApp.ViewModels
 
         public Command IniciarCommand { get; set; }
 
-        InicioSesionAlumno inicioSesionAlumno;
+        //private InicioSesionAlumno inicioSesionAlumno;
 
-        public InicioSesionAlumno InicioSesionAlumno
+        //public InicioSesionAlumno InicioSesionAlumno
+        //{
+        //    get
+        //    {
+        //        return inicioSesionAlumno;
+        //    }
+        //    set
+        //    {
+        //        inicioSesionAlumno = value; Actualizar();
+
+        //    }
+        //}
+
+        private string clave;
+
+        public string  Clave
         {
             get
             {
-                return inicioSesionAlumno;
+                return clave;
             }
             set
             {
-                inicioSesionAlumno = value; Actualizar();
+                clave = value; Actualizar();
 
             }
         }
 
+        private string password;
+
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                password = value; Actualizar();
+
+            }
+        }
 
         private bool running;
         public bool Running
@@ -63,6 +92,7 @@ namespace U2AlumnosApp.ViewModels
             IniciarCommand = new Command(Iniciar);
         }
 
+        string ca="";
         private async void Iniciar()
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
@@ -75,13 +105,13 @@ namespace U2AlumnosApp.ViewModels
                 Running = true;
                 Visible = true;
 
-             
-                await App.AvisosPrim.IniciarSesionAsync("0001", "escolares");
+                ca = Clave;
+                await App.AvisosPrim.IniciarSesionAsync(Clave, Password);
 
                 Running = false;
                 visible = false;
 
-                Application.Current.MainPage = new NavigationPage(new MainPage());
+                Application.Current.MainPage = new MainPage();
 
             }
             catch (Exception ex)
