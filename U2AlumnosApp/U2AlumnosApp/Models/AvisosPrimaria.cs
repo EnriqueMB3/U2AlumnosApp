@@ -33,20 +33,16 @@ namespace U2AlumnosApp.Models
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 HttpClient httpClient = new HttpClient();
-
-                Dictionary<string, string> data = new Dictionary<string, string>() { { "clave", clave }, {"password", password } };
-
+                Dictionary<string, string> data = new Dictionary<string, string>() { { "clave", clave }, { "password", password } };
+                
                 var json = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/login",
                     new FormUrlEncodedContent(data));
 
                 json.EnsureSuccessStatusCode();
-
-
                 Alumno alumnoReceived = JsonConvert.DeserializeObject<Alumno>(await 
                         json.Content.ReadAsStringAsync());
 
                     Insert(alumnoReceived);
-        
             }
             else
             {

@@ -76,7 +76,6 @@ namespace U2AlumnosApp.ViewModels
                 Visible = true;
 
              
-
                 await App.AvisosPrim.IniciarSesionAsync("0001", "escolares");
 
                 Running = false;
