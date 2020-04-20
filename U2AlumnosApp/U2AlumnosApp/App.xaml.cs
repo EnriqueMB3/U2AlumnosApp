@@ -1,6 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using U2AlumnosApp.Models;
+
 
 namespace U2AlumnosApp
 {
@@ -10,8 +12,10 @@ namespace U2AlumnosApp
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new Views.Login();
         }
+
+        public static AvisosPrimaria AvisosPrim { get; set; } = new AvisosPrimaria();
 
         protected override void OnStart()
         {

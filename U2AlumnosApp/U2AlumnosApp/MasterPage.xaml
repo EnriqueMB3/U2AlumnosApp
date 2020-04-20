@@ -48,7 +48,7 @@
             <ListView.Footer>
                 <StackLayout>
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer ></TapGestureRecognizer>
+                        <TapGestureRecognizer  ></TapGestureRecognizer>
                     </StackLayout.GestureRecognizers>
                     <Label Padding="10" FontSize="Subtitle" Text="+ Agregar Alumno" TextColor="#2BE08D"></Label>
                 </StackLayout>
