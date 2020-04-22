@@ -29,5 +29,13 @@ namespace U2AlumnosApp.Models
 			set { clave = value; }
 		}
 
+		private string nombre;
+
+		public string Nombre
+		{
+			get { return nombre; }
+			set { nombre = value; }
+		}
+
 	}
 }

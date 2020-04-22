@@ -23,9 +23,27 @@ namespace U2AlumnosApp.Models
             connection.CreateTable<Maestro>();
         }
 
+        public List<Alumno> GetAlumnosIniciados()
+        {
+            return new List<Alumno>(connection.Table<Alumno>());
+        }
+
         public void Insert(Alumno alumno)
         {
             connection.Insert(alumno);
+        }
+
+        public bool Verificar(int id)
+        {
+            var alumList = connection.Table<Alumno>().ToList();
+            if (!alumList.Exists(x => x.IdAlumno == id))
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+            
         }
 
         public async Task IniciarSesionAsync(string clave, string password)
@@ -42,7 +60,12 @@ namespace U2AlumnosApp.Models
                 Alumno alumnoReceived = JsonConvert.DeserializeObject<Alumno>(await 
                         json.Content.ReadAsStringAsync());
 
+                if (Verificar(alumnoReceived.IdAlumno))
+                {
                     Insert(alumnoReceived);
+                }
+
+
             }
             else
             {

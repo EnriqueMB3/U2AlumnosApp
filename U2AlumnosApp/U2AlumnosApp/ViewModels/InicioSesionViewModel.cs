@@ -79,6 +79,14 @@ namespace U2AlumnosApp.ViewModels
             get { return visible; }
             set { visible = value; Actualizar(); }
         }
+
+        private double opacity;
+        public double Opacity
+        {
+            get { return opacity; }
+            set { opacity = value; Actualizar(); }
+        }
+
         private string error;
         public string Error
         {
@@ -90,9 +98,10 @@ namespace U2AlumnosApp.ViewModels
         public InicioSesionViewModel()
         {
             IniciarCommand = new Command(Iniciar);
+            Opacity = 1;
         }
 
-        string ca="";
+    
         private async void Iniciar()
         {
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
@@ -103,19 +112,19 @@ namespace U2AlumnosApp.ViewModels
             try
             {
                 Running = true;
-                Visible = true;
+                Opacity = .2;
 
-                ca = Clave;
                 await App.AvisosPrim.IniciarSesionAsync(Clave, Password);
 
                 Running = false;
-                visible = false;
+
 
                 Application.Current.MainPage = new MainPage();
 
             }
             catch (Exception ex)
             {
+                Opacity = 1;
 
                 Error = ex.Message;
             }

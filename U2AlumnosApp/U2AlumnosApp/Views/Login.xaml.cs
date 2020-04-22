@@ -16,5 +16,7 @@ namespace U2AlumnosApp.Views
         {
             InitializeComponent();
         }
+
+ 
     }
 }
