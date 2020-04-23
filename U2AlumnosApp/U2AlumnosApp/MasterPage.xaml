@@ -8,7 +8,7 @@
              Title="MasterPage"
              xmlns:vm="clr-namespace:U2AlumnosApp.ViewModels"
              xmlns:fontawesome="clr-namespace:FontAwesome"
-             x:Class="U2AlumnosApp.MasterPage" >
+             x:Class="U2AlumnosApp.MasterPage" NavigationPage.HasNavigationBar="False" >
 
     <ContentPage.BindingContext>
         <vm:MasterDetailViewModel></vm:MasterDetailViewModel>
@@ -53,12 +53,21 @@
             </ListView.ItemTemplate>
 
             <ListView.Footer>
+              
                 <StackLayout>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AgregarAlumnoCommand}"  ></TapGestureRecognizer>
                     </StackLayout.GestureRecognizers>
-                    <Label Padding="10" FontSize="Subtitle" Text="+ Agregar Alumno" TextColor="#2BE08D"></Label>
+                    
+                      
+                        <Label Padding="10" FontSize="Subtitle" Text="+ Agregar Alumno" TextColor="#2BE08D"></Label>
+                    
+                  
                 </StackLayout>
+             
+                
+                <!--<TextCell  Text="+ Agregar Alumno" TextColor="#2BE08D" ></TextCell>-->
+
             </ListView.Footer>
 
             <ListView.Header>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using U2AlumnosApp.Models;
+using U2AlumnosApp.Views;
+
 using Xamarin.Forms;
 
 namespace U2AlumnosApp.ViewModels
@@ -22,7 +24,8 @@ namespace U2AlumnosApp.ViewModels
 
         private void AgregarAlumnoIniciado()
         {
-            Application.Current.MainPage = new Views.Login();
+            Login Login = new Login();
+            App.Current.MainPage.Navigation.PushAsync(Login);
         }
 
         public Command AgregarAlumnoCommand { get; set; }

@@ -6,9 +6,9 @@
              mc:Ignorable="d"
              xmlns:local="clr-namespace:U2AlumnosApp;assembly=U2AlumnosApp"
              xmlns:fontawesome="clr-namespace:FontAwesome"
-             x:Class="U2AlumnosApp.MainPage">
-
-
+             x:Class="U2AlumnosApp.MainPage" NavigationPage.HasNavigationBar="False">
+        
+  
 
     <MasterDetailPage.Master>
         <local:MasterPage x:Name="masterPage" />

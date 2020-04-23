@@ -20,6 +20,8 @@ namespace U2AlumnosApp.ViewModels
         }
 
         public Command IniciarCommand { get; set; }
+        public Command ShowCommand { get; set; }
+
 
         //private InicioSesionAlumno inicioSesionAlumno;
 
@@ -38,7 +40,7 @@ namespace U2AlumnosApp.ViewModels
 
         private string clave;
 
-        public string  Clave
+        public string Clave
         {
             get
             {
@@ -80,6 +82,13 @@ namespace U2AlumnosApp.ViewModels
             set { visible = value; Actualizar(); }
         }
 
+        private bool show = true;
+        public bool Show
+        {
+            get { return show; }
+            set { show = value; Actualizar(); }
+        }
+
         private double opacity;
         public double Opacity
         {
@@ -98,34 +107,45 @@ namespace U2AlumnosApp.ViewModels
         public InicioSesionViewModel()
         {
             IniciarCommand = new Command(Iniciar);
+            ShowCommand = new Command(ShowPassword);
             Opacity = 1;
         }
 
-    
+        private void ShowPassword()
+        {
+            Show = !Show;
+        }
+
         private async void Iniciar()
         {
-            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                Error = "No hay conexión a internet.";
-                return;
-            }
             try
             {
-                Running = true;
-                Opacity = .2;
+             
 
-                await App.AvisosPrim.IniciarSesionAsync(Clave, Password);
+                    if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+                    {
+                        Error = "No hay conexión a internet.";
+                        return;
+                    }
+                    Running = true;
+                    Visible = false;
+                    Opacity = .2;
 
-                Running = false;
+                    await App.AvisosPrim.IniciarSesionAsync(Clave, Password);
+
+                    Running = false;
+                    Visible = true;
 
 
-                Application.Current.MainPage = new MainPage();
+                    Application.Current.MainPage = new NavigationPage(new MainPage());
 
+               
             }
             catch (Exception ex)
             {
                 Opacity = 1;
-
+                Running = false;
+                Visible = true;
                 Error = ex.Message;
             }
         }

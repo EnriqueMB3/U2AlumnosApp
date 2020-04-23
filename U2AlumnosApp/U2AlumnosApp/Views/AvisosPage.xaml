@@ -5,14 +5,70 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="U2AlumnosApp.AvisosPage"
-             >
-    
+              xmlns:vm="clr-namespace:U2AlumnosApp.ViewModels" >
+
+
+    <ContentPage.BindingContext>
+        <vm:AvisosViewModel></vm:AvisosViewModel>
+    </ContentPage.BindingContext>
+
     <!--FEED DE MENSAJES ENVIADOS-->
-    <ContentPage.Content>
-        <StackLayout >
+    <StackLayout>
+
+        <StackLayout Padding="0" IsVisible="{Binding Lleno}">
+            <ListView RowHeight="80" SelectionMode="None" ItemsSource="{Binding Alumnos}">
+
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+
+
+
+                            <StackLayout  Orientation="Horizontal" Margin="5" Padding="10">
+                                <Frame 
+       BorderColor="Black"
+       CornerRadius="30"
+   WidthRequest="10"
+       IsClippedToBounds="True"
+       HorizontalOptions="Center"
+       VerticalOptions="Center" >
+                                    <Image Source="BuhoIcon"
+         Aspect="AspectFill"
+         Margin="-20"
+         HeightRequest="60"
+         WidthRequest="60" />
+                                </Frame>
+
+                                <StackLayout Orientation="Vertical" Margin="10" >
+                                    <Label TextColor="#4D4D4D " FontAttributes="Bold" Text="{Binding Nombre}"  FontSize="Subtitle"></Label>
+                                    <Label TextColor="#B3B3B3 " Text="{Binding Clave}"  FontSize="Small"></Label>
+                                </StackLayout>
+                            </StackLayout>
+
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+              
+            </ListView>
+
+        </StackLayout>
+
+
+
+
+
+
+
+
+
+        <StackLayout  IsVisible="{Binding Vacio}">
          
             <Image Source="vacioPapalote" HeightRequest="200"  Margin="40,80,0,30" WidthRequest="200"></Image>
             <Label Text="No tienes avisos nuevos por ahora" HorizontalTextAlignment="Center" TextColor="#B3B3B3" FontSize="Subtitle"></Label>
         </StackLayout>
-    </ContentPage.Content>
+    
+    </StackLayout>
 </ContentPage>
