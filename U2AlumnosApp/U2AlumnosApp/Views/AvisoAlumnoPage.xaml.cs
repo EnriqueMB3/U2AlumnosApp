@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using U2AlumnosApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +15,9 @@ namespace U2AlumnosApp
         public AvisoAlumnoPage()
         {
             InitializeComponent();
+            
+
+         
         }
     }
 }

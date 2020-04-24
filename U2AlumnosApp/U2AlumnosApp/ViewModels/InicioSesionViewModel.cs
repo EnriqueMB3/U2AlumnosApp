@@ -135,7 +135,7 @@ namespace U2AlumnosApp.ViewModels
 
                     Running = false;
                     Visible = true;
-
+                    App.AvisosPrim.ClaveAlumnoIniciado = Clave;
 
                     Application.Current.MainPage = new NavigationPage(new MainPage());
 

@@ -37,5 +37,7 @@ namespace U2AlumnosApp.Models
 			set { nombre = value; }
 		}
 
+		public bool Activo { get; set; }
+
 	}
 }

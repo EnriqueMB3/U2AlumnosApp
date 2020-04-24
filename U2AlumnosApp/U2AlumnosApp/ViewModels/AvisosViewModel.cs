@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using U2AlumnosApp.Models;
+using Xamarin.Forms;
 
 namespace U2AlumnosApp.ViewModels
 {
@@ -32,22 +33,36 @@ namespace U2AlumnosApp.ViewModels
             set { vacio = value; Actualizar(); }
         }
 
-        public ObservableCollection<Alumno> Alumnos { get; set; }
-        List<Alumno> AlumnosApp;
+        public ObservableCollection<Aviso> Avisos { get; set; }
+        public Command AvisoAlumnoCommand { get; private set; }
 
-        public AvisosViewModel()
+        List<Aviso> AvisosEnviados;
+
+        public AvisosViewModel(string clave)
         {
-            Alumnos = new ObservableCollection<Alumno>();
-            AlumnosApp = App.AvisosPrim.GetAlumnosIniciados();
-            if (AlumnosApp == null)
+            
+            Avisos = new ObservableCollection<Aviso>();
+            AvisosEnviados = App.AvisosPrim.GetAvisosEnviados(clave);
+            if (AvisosEnviados.Count ==0)
             {
-                Vacio = false;
+                Vacio = true;
             }
             else
             {
-                AlumnosApp.ForEach(x => Alumnos.Add(x));
+                foreach (var item in AvisosEnviados)
+                {
+                    Avisos.Add(item);
+                }
                 Lleno = true;
             }
+
+            AvisoAlumnoCommand = new Command(AvisoAlumno);
+        }
+
+        private void AvisoAlumno()
+        {
+            AvisoAlumnoPage avisoAlumnoPage = new AvisoAlumnoPage();
+            App.Current.MainPage.Navigation.PushAsync(avisoAlumnoPage);
         }
     }
 }

@@ -8,7 +8,7 @@
              Title="MasterPage"
              xmlns:vm="clr-namespace:U2AlumnosApp.ViewModels"
              xmlns:fontawesome="clr-namespace:FontAwesome"
-             x:Class="U2AlumnosApp.MasterPage" NavigationPage.HasNavigationBar="False" >
+             x:Class="U2AlumnosApp.MasterPage" NavigationPage.HasNavigationBar="False" x:Name="viewMaster">
 
     <ContentPage.BindingContext>
         <vm:MasterDetailViewModel></vm:MasterDetailViewModel>
@@ -22,12 +22,17 @@
         
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell >
-               
 
+
+                    <ViewCell>
+                        
 
                             <StackLayout  Orientation="Horizontal" Margin="5">
-                                <Frame 
+                        <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference  viewMaster }, Path=BindingContext.AlumnoAvisosCommand}" CommandParameter="{Binding Clave}"></TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+
+                        <Frame 
        BorderColor="Black"
        CornerRadius="25"
    WidthRequest="5"
@@ -42,12 +47,13 @@
                                 </Frame>
                                 
                                     <StackLayout Orientation="Vertical" Margin="10" >
+                                       
                                 <Label TextColor="#4D4D4D " FontAttributes="Bold" Text="{Binding Nombre}"  FontSize="Subtitle"></Label>
                                 <Label TextColor="#B3B3B3 " Text="{Binding Clave}"  FontSize="Small"></Label>
                                     </StackLayout>
                                                          </StackLayout>
 
-                  
+              
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -12,13 +12,27 @@ namespace U2AlumnosApp
         {
             InitializeComponent();
 
-            MainPage = new Views.Login();
+            if (AvisosPrim.CountAlumnos()>0)
+            {
+                if (AvisosPrim.ClaveAlumnoIniciado==null)
+                {
+                    AvisosPrim.ClaveAlumnoIniciado = AvisosPrim.StartSession();
+                }
+                MainPage = new NavigationPage(new MainPage());
+            }
+            else
+            {
+
+                MainPage = new Views.Login();
+            }
         }
 
         public static AvisosPrimaria AvisosPrim { get; set; } = new AvisosPrimaria();
+     
 
         protected override void OnStart()
         {
+           
         }
 
         protected override void OnSleep()
