@@ -13,7 +13,8 @@ namespace U2AlumnosApp.ViewModels
     {
 
         public ObservableCollection<Alumno> Alumnos { get; set; }
-        public Command<string> AlumnoAvisosCommand { get; set; }
+        public Command<Alumno> AlumnoAvisosCommand { get; set; }
+    
         List<Alumno> AlumnosApp;
         public MasterDetailViewModel()
         {
@@ -21,12 +22,17 @@ namespace U2AlumnosApp.ViewModels
             AlumnosApp = App.AvisosPrim.GetAlumnosIniciados();
             AlumnosApp.ForEach(x => Alumnos.Add(x));
             AgregarAlumnoCommand = new Command(AgregarAlumnoIniciado);
-            AlumnoAvisosCommand = new Command<string>(AlumnoAvisos);
+            AlumnoAvisosCommand = new Command<Alumno>(AlumnoAvisos);
         }
 
-        private void AlumnoAvisos(string clave)
+        private void AlumnoAvisos(Alumno alumno)
         {
-            App.AvisosPrim.ClaveAlumnoIniciado = clave;
+
+            AlumnoIniciado alumnoIniciado = new AlumnoIniciado();
+            alumnoIniciado.ClaveAlumnoIniciado = alumno.Clave;
+            alumnoIniciado.NombreEscuela = alumno.NombreEscuela;
+            App.AvisosPrim.AlumnoIniciado = alumnoIniciado;
+            //await App.AvisosPrim.AvisosUpdate();
             Application.Current.MainPage = new NavigationPage(new MainPage());
         }
 

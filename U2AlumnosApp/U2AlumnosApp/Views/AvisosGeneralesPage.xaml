@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:vm="clr-namespace:U2AlumnosApp.ViewModels"
+             x:Class="U2AlumnosApp.Views.AvisosGeneralesPage"   xmlns:fontawesome="clr-namespace:FontAwesome">
+
+
+    <ContentPage.BindingContext>
+        <vm:AvisosGeneralesViewModel></vm:AvisosGeneralesViewModel>
+    </ContentPage.BindingContext>
+
+
+    <StackLayout>
+
+        <StackLayout Padding="0" >
+            <ListView RowHeight="120"  SelectionMode="None" ItemsSource="{Binding AvisosGenerales}">
+
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+
+
+
+                            <StackLayout  Padding="10" >
+                                
+
+
+                                <StackLayout Orientation="Vertical" Margin="10" >
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{x:Static fontawesome:FontAwesomeIcons.Bullhorn}"
+                                            FontFamily="{StaticResource FontAwesomeSolid}" Rotation="-20" TranslationY="5"></Label>
+                                        <Label TextColor="#4D4D4D " FontSize="20" Text="Direccion" FontAttributes="Bold"></Label>
+                                    </StackLayout>
+                                    <Label TextColor="#4D4D4D " Margin="20,0,0,0" FontAttributes="Bold" Text="{Binding Titulo}"  FontSize="Subtitle"></Label>
+                                    <Label TextColor="#B3B3B3" Margin="20,0,0,0"  Text="{Binding Contenido}"  FontSize="Small"></Label>
+                                </StackLayout>
+                            </StackLayout>
+
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <StackLayout  Margin="0,80,0,0" HorizontalOptions="CenterAndExpand" IsVisible="{Binding Vacio}">
+
+
+                        <Image Source="vacioPapalote" HeightRequest="200"   WidthRequest="200"></Image>
+                        <Label Text="No tienes avisos nuevos por ahora" HorizontalTextAlignment="Center" TextColor="#B3B3B3" FontSize="Subtitle"></Label>
+
+                    </StackLayout>
+                </ListView.Footer>
+
+            </ListView>
+
+
+
+        </StackLayout>
+
+
+
+
+
+
+
+
+
+    </StackLayout>
+
+
+
+</ContentPage>

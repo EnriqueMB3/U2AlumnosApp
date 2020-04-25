@@ -120,26 +120,29 @@ namespace U2AlumnosApp.ViewModels
         {
             try
             {
-             
 
-                    if (Connectivity.NetworkAccess != NetworkAccess.Internet)
-                    {
-                        Error = "No hay conexión a internet.";
-                        return;
-                    }
-                    Running = true;
-                    Visible = false;
-                    Opacity = .2;
 
-                    await App.AvisosPrim.IniciarSesionAsync(Clave, Password);
+                if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+                {
+                    Error = "No hay conexión a internet.";
+                    return;
+                }
+                Running = true;
+                Visible = false;
+                Opacity = .2;
 
-                    Running = false;
-                    Visible = true;
-                    App.AvisosPrim.ClaveAlumnoIniciado = Clave;
+                AlumnoIniciado alumnoIniciado = await App.AvisosPrim.IniciarSesionAsync(Clave, Password);
 
-                    Application.Current.MainPage = new NavigationPage(new MainPage());
+                Running = false;
+                Visible = true;
+                if (alumnoIniciado != null)
+                {
+                    App.AvisosPrim.AlumnoIniciado = alumnoIniciado;
+                }
 
-               
+                Application.Current.MainPage = new NavigationPage(new MainPage());
+
+
             }
             catch (Exception ex)
             {

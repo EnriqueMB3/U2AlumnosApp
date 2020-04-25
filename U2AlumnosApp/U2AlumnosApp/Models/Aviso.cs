@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,8 @@ namespace U2AlumnosApp.Models
 {
     public class Aviso
     {
+
+        [PrimaryKey]
         public int IdAvisosEnviados { get; set; }
         public string Titulo { get; set; }
         public string Contenido { get; set; }

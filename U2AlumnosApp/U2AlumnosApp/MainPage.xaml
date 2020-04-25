@@ -9,10 +9,10 @@
              x:Class="U2AlumnosApp.MainPage" NavigationPage.HasNavigationBar="False">
         
   
-
     <MasterDetailPage.Master>
         <local:MasterPage x:Name="masterPage" />
     </MasterDetailPage.Master>
+
     <MasterDetailPage.Detail>
         <NavigationPage>
             <x:Arguments>

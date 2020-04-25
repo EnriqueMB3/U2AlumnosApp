@@ -14,9 +14,9 @@ namespace U2AlumnosApp
 
             if (AvisosPrim.CountAlumnos()>0)
             {
-                if (AvisosPrim.ClaveAlumnoIniciado==null)
+                if (AvisosPrim.AlumnoIniciado==null)
                 {
-                    AvisosPrim.ClaveAlumnoIniciado = AvisosPrim.StartSession();
+                    AvisosPrim.AlumnoIniciado = AvisosPrim.StartSession();
                 }
                 MainPage = new NavigationPage(new MainPage());
             }

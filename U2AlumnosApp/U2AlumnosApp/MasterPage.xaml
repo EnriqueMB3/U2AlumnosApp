@@ -15,63 +15,62 @@
     </ContentPage.BindingContext>
 
 
-
     <StackLayout Padding="0">
         <ListView RowHeight="80" SelectionMode="None" ItemsSource="{Binding Alumnos}">
 
-        
+
             <ListView.ItemTemplate>
                 <DataTemplate>
 
 
                     <ViewCell>
-                        
 
-                            <StackLayout  Orientation="Horizontal" Margin="5">
-                        <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference  viewMaster }, Path=BindingContext.AlumnoAvisosCommand}" CommandParameter="{Binding Clave}"></TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
 
-                        <Frame 
+                        <StackLayout  Orientation="Horizontal" Margin="5">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference  viewMaster }, Path=BindingContext.AlumnoAvisosCommand}" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+
+                            <Frame 
        BorderColor="Black"
        CornerRadius="25"
    WidthRequest="5"
        IsClippedToBounds="True"
        HorizontalOptions="Center"
        VerticalOptions="Center" >
-                                    <Image Source="Astronaut"
+                                <Image Source="Astronaut"
          Aspect="AspectFill"
          Margin="-20"
          HeightRequest="45"
          WidthRequest="45" />
-                                </Frame>
-                                
-                                    <StackLayout Orientation="Vertical" Margin="10" >
-                                       
+                            </Frame>
+
+                            <StackLayout Orientation="Vertical" Margin="10" >
+
                                 <Label TextColor="#4D4D4D " FontAttributes="Bold" Text="{Binding Nombre}"  FontSize="Subtitle"></Label>
                                 <Label TextColor="#B3B3B3 " Text="{Binding Clave}"  FontSize="Small"></Label>
-                                    </StackLayout>
-                                                         </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
 
-              
+
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
 
             <ListView.Footer>
-              
+
                 <StackLayout>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AgregarAlumnoCommand}"  ></TapGestureRecognizer>
                     </StackLayout.GestureRecognizers>
-                    
-                      
-                        <Label Padding="10" FontSize="Subtitle" Text="+ Agregar Alumno" TextColor="#2BE08D"></Label>
-                    
-                  
+
+
+                    <Label Padding="10" FontSize="Subtitle" Text="+ Agregar Alumno" TextColor="#2BE08D"></Label>
+
+
                 </StackLayout>
-             
-                
+
+
                 <!--<TextCell  Text="+ Agregar Alumno" TextColor="#2BE08D" ></TextCell>-->
 
             </ListView.Footer>
@@ -84,6 +83,6 @@
 
             </ListView.Header>
         </ListView>
- 
+
     </StackLayout>
 </ContentPage>

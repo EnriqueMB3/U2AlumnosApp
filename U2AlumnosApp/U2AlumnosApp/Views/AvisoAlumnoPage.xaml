@@ -6,13 +6,4 @@
              mc:Ignorable="d"
              x:Class="U2AlumnosApp.AvisoAlumnoPage">
     
-    <!--VISTA INDIVIDUAL DEL MENSAJE ENVIADO-->
-    
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
 </ContentPage>
