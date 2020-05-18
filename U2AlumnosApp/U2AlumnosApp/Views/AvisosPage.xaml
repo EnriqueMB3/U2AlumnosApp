@@ -5,10 +5,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="U2AlumnosApp.AvisosPage"
-              xmlns:vm="clr-namespace:U2AlumnosApp.ViewModels" xmlns:fontawesome="clr-namespace:FontAwesome"  >
+              xmlns:vm="clr-namespace:U2AlumnosApp.ViewModels" 
+             xmlns:fontawesome="clr-namespace:FontAwesome"  x:Name="vtnAvisosPage" >
 
     <Grid>
+       
         <AbsoluteLayout>
+
+            
             <!--FEED DE MENSAJES ENVIADOS-->
             <FlexLayout>
 
@@ -20,11 +24,14 @@
                             <DataTemplate>
                                 <ViewCell >
 
+                                    
 
 
                                     <StackLayout Orientation="Horizontal" Margin="5" Padding="10">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference vtnAvisosPage}, Path= BindingContext.AvisoAlumnoCommand}"  CommandParameter="{Binding .}"></TapGestureRecognizer>
 
-
+                                        </StackLayout.GestureRecognizers>
                                         <Frame 
        BorderColor="Black"
        CornerRadius="30"
@@ -32,6 +39,7 @@
        IsClippedToBounds="True"
        HorizontalOptions="Center"
        VerticalOptions="Center" >
+
                                             <Image Source="BuhoIcon"
          Aspect="AspectFill"
          Margin="-20"
@@ -40,6 +48,7 @@
                                         </Frame>
 
                                         <StackLayout Orientation="Vertical" Margin="10" >
+                                           
 
                                             <Label TextColor="#4D4D4D " FontAttributes="Bold" Text="{Binding NombreMaestro}"  FontSize="Subtitle"></Label>
                                             <Label TextColor="#B3B3B3 " Text="{Binding Contenido}"  FontSize="Small"></Label>
@@ -87,12 +96,17 @@
                 <Grid TranslationX="30" TranslationY="-10" >
 
                     <Frame HasShadow="False"  CornerRadius="18" BackgroundColor="#FFC107"   Margin="0" Padding="5" WidthRequest="18" HeightRequest="18" >
-                        <Label Text="10" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Micro" Padding="0" Margin="0" TextColor="White" FontAttributes="Bold"></Label>
+                        <Label Text="{Binding AvisosGeneralesCount}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Micro" Padding="0" Margin="0" TextColor="White" FontAttributes="Bold"></Label>
                     </Frame>
                 </Grid>
             </AbsoluteLayout>
 
         </AbsoluteLayout>
-
+        <Grid IsVisible="{Binding Cargando}">
+            <Grid BackgroundColor="Black" Opacity=".4"></Grid>
+            <StackLayout VerticalOptions="CenterAndExpand">
+                <ActivityIndicator IsRunning="{Binding Cargando}"></ActivityIndicator>
+            </StackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

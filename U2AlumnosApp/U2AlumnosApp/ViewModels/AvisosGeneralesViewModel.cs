@@ -5,6 +5,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using U2AlumnosApp.Models;
+using U2AlumnosApp.Views;
+using Xamarin.Forms;
+
 
 namespace U2AlumnosApp.ViewModels
 {
@@ -32,6 +35,8 @@ namespace U2AlumnosApp.ViewModels
             get { return vacio; }
             set { vacio = value; Actualizar(); }
         }
+
+        public Command<AvisosGenerales> AvisosGeneralesAlumnoCommand { get; private set; }
         public AvisosGeneralesViewModel()
         {
 
@@ -48,6 +53,16 @@ namespace U2AlumnosApp.ViewModels
                     AvisosGenerales.Add(item);
                 }
             }
+
+            AvisosGeneralesAlumnoCommand = new Command<AvisosGenerales>(AvisoGeneral);
+        }
+
+            AvisoGeneralAlumno avisog;
+        private async void AvisoGeneral(AvisosGenerales avisosGenerales)
+        {
+            avisog = new AvisoGeneralAlumno();
+            avisog.BindingContext = avisosGenerales;
+            await App.Current.MainPage.Navigation.PushAsync(avisog);
         }
     }
 }

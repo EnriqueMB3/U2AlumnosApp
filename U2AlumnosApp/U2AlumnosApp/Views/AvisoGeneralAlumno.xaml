@@ -4,9 +4,12 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="U2AlumnosApp.AvisoAlumnoPage" Title="{Binding NombreMaestro}">
-
-    <StackLayout>
-        <Label Text="Welcome to Xamarin Worms" ></Label>
-    </StackLayout>
+             x:Class="U2AlumnosApp.Views.AvisoGeneralAlumno" Title="Dirección" >
+    
+        <StackLayout>
+        <Label Text="{Binding Contenido}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    
 </ContentPage>

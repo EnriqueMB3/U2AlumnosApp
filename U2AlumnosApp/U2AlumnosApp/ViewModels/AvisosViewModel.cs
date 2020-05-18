@@ -34,6 +34,13 @@ namespace U2AlumnosApp.ViewModels
             get { return vacio; }
             set { vacio = value; Actualizar(); }
         }
+        private bool cargando;
+
+        public bool Cargando
+        {
+            get { return cargando; }
+            set { cargando = value; Actualizar(); }
+        }
 
         private int avisosGeneralesCount;
         public int AvisosGeneralesCount
@@ -42,7 +49,14 @@ namespace U2AlumnosApp.ViewModels
             set { avisosGeneralesCount = value; Actualizar(); }
         }
 
-        public Command AvisoAlumnoCommand { get; private set; }
+
+        //private bool visible;
+        //public bool Visible
+        //{
+        //    get { return visible; }
+        //    set { visible = value; Actualizar(); }
+        //}
+        public Command<Aviso> AvisoAlumnoCommand { get;  set; }
         public Command AvisosGeneralesCommand { get; private set; }
 
         public ObservableCollection<Aviso> Avisos { get; set; }
@@ -52,7 +66,8 @@ namespace U2AlumnosApp.ViewModels
         {
             Avisos = new ObservableCollection<Aviso>();
             AvisosEnviados = App.AvisosPrim.GetAvisosEnviados(alumno.ClaveAlumnoIniciado);
-            AvisosGeneralesCount = App.AvisosPrim.CountGenerales(alumno.NombreEscuela); 
+            AvisosGeneralesCount = App.AvisosPrim.CountGenerales(alumno.NombreEscuela);
+
             if (AvisosEnviados.Count == 0)
             {
                 Vacio = true;
@@ -66,22 +81,27 @@ namespace U2AlumnosApp.ViewModels
                 Lleno = true;
             }
 
-            AvisoAlumnoCommand = new Command(AvisoAlumno);
+            AvisoAlumnoCommand = new Command<Aviso>(AvisoAlumnoVer);
             AvisosGeneralesCommand = new Command(AvisosGenerales);
         }
 
+        AvisoAlumnoPage avisoAlumnoPage; 
+        private async void AvisoAlumnoVer(Aviso obj)
+        {
+            avisoAlumnoPage = new AvisoAlumnoPage();
+            avisoAlumnoPage.BindingContext = obj;
+            await App.Current.MainPage.Navigation.PushAsync(avisoAlumnoPage);
+        }
+
+      
+
         private async void AvisosGenerales()
         {
+            Cargando = true;
             await Task.Run(() => App.AvisosPrim.AvisosGeneralesUpdate());
-            
+            Cargando = false;
             await App.Current.MainPage.Navigation.PushAsync(new AvisosGeneralesPage());
         }
-
-        private void AvisoAlumno()
-        {
-            AvisoAlumnoPage avisoAlumnoPage = new AvisoAlumnoPage();
-
-            App.Current.MainPage.Navigation.PushAsync(avisoAlumnoPage);
-        }
+       
     }
 }

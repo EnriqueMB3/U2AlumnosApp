@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:vm="clr-namespace:U2AlumnosApp.ViewModels"
-             x:Class="U2AlumnosApp.Views.AvisosGeneralesPage"   xmlns:fontawesome="clr-namespace:FontAwesome">
+             x:Class="U2AlumnosApp.Views.AvisosGeneralesPage" x:Name="vtnAvisoGeneral"
+             xmlns:fontawesome="clr-namespace:FontAwesome" >
 
 
     <ContentPage.BindingContext>
@@ -13,10 +14,8 @@
     </ContentPage.BindingContext>
 
 
-    <StackLayout>
-
         <StackLayout Padding="0" >
-            <ListView RowHeight="120"  SelectionMode="None" ItemsSource="{Binding AvisosGenerales}">
+            <ListView RowHeight="180"  SelectionMode="None" ItemsSource="{Binding AvisosGenerales}">
 
 
                 <ListView.ItemTemplate>
@@ -26,14 +25,16 @@
 
 
                             <StackLayout  Padding="10" >
-                                
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference vtnAvisoGeneral}, Path= BindingContext.AvisosGeneralesAlumnoCommand}"  CommandParameter="{Binding .}"></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
 
 
                                 <StackLayout Orientation="Vertical" Margin="10" >
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="{x:Static fontawesome:FontAwesomeIcons.Bullhorn}"
                                             FontFamily="{StaticResource FontAwesomeSolid}" Rotation="-20" TranslationY="5"></Label>
-                                        <Label TextColor="#4D4D4D " FontSize="20" Text="Direccion" FontAttributes="Bold"></Label>
+                                        <Label TextColor="#4D4D4D" FontSize="20" Text="Direccion" FontAttributes="Bold"></Label>
                                     </StackLayout>
                                     <Label TextColor="#4D4D4D " Margin="20,0,0,0" FontAttributes="Bold" Text="{Binding Titulo}"  FontSize="Subtitle"></Label>
                                     <Label TextColor="#B3B3B3" Margin="20,0,0,0"  Text="{Binding Contenido}"  FontSize="Small"></Label>
@@ -64,11 +65,6 @@
 
 
 
-
-
-
-
-    </StackLayout>
 
 
 
