@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              xmlns:vm="clr-namespace:U2AlumnosApp.ViewModels"
              x:Class="U2AlumnosApp.Views.AvisosGeneralesPage" x:Name="vtnAvisoGeneral"
-             xmlns:fontawesome="clr-namespace:FontAwesome" >
+             xmlns:fontawesome="clr-namespace:FontAwesome" Title="Avisos Generales" >
 
 
     <ContentPage.BindingContext>

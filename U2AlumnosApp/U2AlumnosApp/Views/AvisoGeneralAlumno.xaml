@@ -5,11 +5,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="U2AlumnosApp.Views.AvisoGeneralAlumno" Title="Dirección" >
-    
-        <StackLayout>
-        <Label Text="{Binding Contenido}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+    <Grid>
+        
+    <StackLayout Padding="15">
+        <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+        <Label Text="La pandemia y cuando volveremos" FontSize="Title" FontAttributes="Bold"></Label>
+            <Label Text="{Binding FechaEnviado, StringFormat='{0:D}'}" HorizontalTextAlignment="End" HorizontalOptions="EndAndExpand"></Label>
         </StackLayout>
-    
+        <BoxView HeightRequest="1" BackgroundColor="LightGray" Margin="0,0,0,5" HorizontalOptions="FillAndExpand" />
+
+            <RelativeLayout >
+
+                <Label Text="{Binding Contenido}"
+           FontSize="Body" 
+           HorizontalOptions="StartAndExpand"
+                       
+           RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}" />
+            </RelativeLayout>
+
+        </StackLayout>
+     
+            
+        
+    </Grid>
 </ContentPage>

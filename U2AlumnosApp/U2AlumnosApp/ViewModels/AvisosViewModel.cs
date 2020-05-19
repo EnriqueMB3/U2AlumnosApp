@@ -61,9 +61,12 @@ namespace U2AlumnosApp.ViewModels
 
         public ObservableCollection<Aviso> Avisos { get; set; }
         List<Aviso> AvisosEnviados;
+        public AlumnoIniciado AlumnoInc { get; set; }
 
         public AvisosViewModel(AlumnoIniciado alumno)
         {
+
+         
             Avisos = new ObservableCollection<Aviso>();
             AvisosEnviados = App.AvisosPrim.GetAvisosEnviados(alumno.ClaveAlumnoIniciado);
             AvisosGeneralesCount = App.AvisosPrim.CountGenerales(alumno.NombreEscuela);
@@ -90,7 +93,11 @@ namespace U2AlumnosApp.ViewModels
         {
             avisoAlumnoPage = new AvisoAlumnoPage();
             avisoAlumnoPage.BindingContext = obj;
+            Cargando = true;
+            await App.AvisosPrim.AvisosMaestroVisto(obj);
+            Cargando = false;
             await App.Current.MainPage.Navigation.PushAsync(avisoAlumnoPage);
+
         }
 
       
@@ -102,6 +109,9 @@ namespace U2AlumnosApp.ViewModels
             Cargando = false;
             await App.Current.MainPage.Navigation.PushAsync(new AvisosGeneralesPage());
         }
+
        
+
+
     }
 }

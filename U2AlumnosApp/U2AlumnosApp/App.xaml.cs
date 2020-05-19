@@ -16,6 +16,7 @@ namespace U2AlumnosApp
             {
                 if (AvisosPrim.AlumnoIniciado==null)
                 {
+                    
                     AvisosPrim.AlumnoIniciado = AvisosPrim.StartSession();
                 }
                 MainPage = new NavigationPage(new MainPage());

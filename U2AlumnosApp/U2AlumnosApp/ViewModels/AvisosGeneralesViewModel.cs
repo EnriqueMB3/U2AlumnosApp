@@ -39,7 +39,7 @@ namespace U2AlumnosApp.ViewModels
         public Command<AvisosGenerales> AvisosGeneralesAlumnoCommand { get; private set; }
         public AvisosGeneralesViewModel()
         {
-
+           
             AvisosGenerales = new ObservableCollection<AvisosGenerales>();
             AvisosGeneralesEnviados = App.AvisosPrim.GetAvisosGeneralesEnviados(App.AvisosPrim.AlumnoIniciado.NombreEscuela);
             if (App.AvisosPrim.CountGenerales(App.AvisosPrim.AlumnoIniciado.NombreEscuela) == 0)
@@ -64,5 +64,6 @@ namespace U2AlumnosApp.ViewModels
             avisog.BindingContext = avisosGenerales;
             await App.Current.MainPage.Navigation.PushAsync(avisog);
         }
+       
     }
 }

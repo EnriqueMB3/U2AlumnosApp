@@ -68,6 +68,7 @@ namespace U2AlumnosApp.Models
             connection.CreateTable<Aviso>();
             connection.CreateTable<Maestro>();
             connection.CreateTable<AvisosGenerales>();
+            
          
         }
 
@@ -83,7 +84,7 @@ namespace U2AlumnosApp.Models
         }
         public List<Aviso> GetAvisosEnviados(string id)
         {
-            return new List<Aviso>(connection.Table<Aviso>().Where(x => x.ClaveAlumno == id));
+            return new List<Aviso>(connection.Table<Aviso>().Where(x => x.ClaveAlumno == id).OrderByDescending(x=>x.Estatus));
         }
 
         public int CountAlumnos()
@@ -156,7 +157,7 @@ namespace U2AlumnosApp.Models
                     Alumno alumnoReceived = JsonConvert.DeserializeObject<Alumno>(await
                           json.Content.ReadAsStringAsync());
 
-                    connection.Insert(alumnoReceived);
+                    
 
                     var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisosNuevosByClaveAlumno", new FormUrlEncodedContent(keyClave));
                     jsonAvisos.EnsureSuccessStatusCode();
@@ -211,6 +212,7 @@ namespace U2AlumnosApp.Models
                             }
                         }
                     }
+                    connection.Insert(alumnoReceived);
                     AlumnoIniciado alumnoIniciado = new AlumnoIniciado()
                     {
                         ClaveAlumnoIniciado = alumnoReceived.Clave,
@@ -263,8 +265,23 @@ namespace U2AlumnosApp.Models
             }
         }
 
+        public async Task AvisosMaestroVisto(Aviso aviso)
+        {
+            if (aviso.FechaLeido == null)
+            {
+            
+            aviso.FechaLeido = DateTime.Now;
+            aviso.Estatus = 1;
+            HttpClient httpClient = new HttpClient();
+                Dictionary<string, string> keyClave = new Dictionary<string, string>() { { "idAviso", aviso.IdAvisosEnviados.ToString()}, { "fechaRecibido", aviso.FechaRecibido.ToString() } };
 
-        public async Task AvisosGeneralesUpdate()
+            var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisosNuevosByClaveAlumno", new FormUrlEncodedContent(keyClave));
+            jsonAvisos.EnsureSuccessStatusCode();
+            }
+            
+        }
+
+        public async void AvisosGeneralesUpdate()
         {
             HttpClient httpClient = new HttpClient();
 
