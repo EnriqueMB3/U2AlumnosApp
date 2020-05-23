@@ -42,6 +42,14 @@ namespace U2AlumnosApp.ViewModels
             set { cargando = value; Actualizar(); }
         }
 
+        private bool cargandoRefresh;
+
+        public bool CargandoRefresh
+        {
+            get { return cargandoRefresh; }
+            set { cargandoRefresh = value; Actualizar(); }
+        }
+
         private int avisosGeneralesCount;
         public int AvisosGeneralesCount
         {
@@ -58,16 +66,18 @@ namespace U2AlumnosApp.ViewModels
         //}
         public Command<Aviso> AvisoAlumnoCommand { get;  set; }
         public Command AvisosGeneralesCommand { get; private set; }
+        public Command AvisosNuevosCommand { get; set; }
 
         public ObservableCollection<Aviso> Avisos { get; set; }
         List<Aviso> AvisosEnviados;
-        public AlumnoIniciado AlumnoInc { get; set; }
+
+        public AlumnoIniciado AlumnoIniciado{ get; set; }
 
         public AvisosViewModel(AlumnoIniciado alumno)
         {
-
-         
+            AlumnoIniciado = alumno;
             Avisos = new ObservableCollection<Aviso>();
+            Task.Run(() => App.AvisosPrim.AvisosUpdate());
             AvisosEnviados = App.AvisosPrim.GetAvisosEnviados(alumno.ClaveAlumnoIniciado);
             AvisosGeneralesCount = App.AvisosPrim.CountGenerales(alumno.NombreEscuela);
 
@@ -86,17 +96,41 @@ namespace U2AlumnosApp.ViewModels
 
             AvisoAlumnoCommand = new Command<Aviso>(AvisoAlumnoVer);
             AvisosGeneralesCommand = new Command(AvisosGenerales);
+            AvisosNuevosCommand = new Command(RevisarNuevoasAvisos);
+        }
+
+
+
+        private async void RevisarNuevoasAvisos()
+        {
+            CargandoRefresh = true;
+            await Task.Run(() => App.AvisosPrim.AvisosUpdate());
+            AvisosEnviados = App.AvisosPrim.GetAvisosEnviados(AlumnoIniciado.ClaveAlumnoIniciado);
+            AvisosGeneralesCount = App.AvisosPrim.CountGenerales(AlumnoIniciado.NombreEscuela);
+            Avisos.Clear();
+            foreach (var item in AvisosEnviados)
+            {
+                Avisos.Add(item);
+            }
+            CargandoRefresh = false;
         }
 
         AvisoAlumnoPage avisoAlumnoPage; 
         private async void AvisoAlumnoVer(Aviso obj)
         {
-            avisoAlumnoPage = new AvisoAlumnoPage();
-            avisoAlumnoPage.BindingContext = obj;
-            Cargando = true;
-            await App.AvisosPrim.AvisosMaestroVisto(obj);
-            Cargando = false;
-            await App.Current.MainPage.Navigation.PushAsync(avisoAlumnoPage);
+            try
+            {
+                avisoAlumnoPage = new AvisoAlumnoPage();
+                avisoAlumnoPage.BindingContext = obj;
+                Cargando = true;
+                await App.AvisosPrim.AvisosMaestroVisto(obj);
+                Cargando = false;
+                await App.Current.MainPage.Navigation.PushAsync(avisoAlumnoPage);
+            }
+            catch (Exception ex)
+            {
+                Cargando = false;
+            }
 
         }
 

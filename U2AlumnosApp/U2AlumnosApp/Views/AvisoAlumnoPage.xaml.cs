@@ -15,9 +15,6 @@ namespace U2AlumnosApp
         public AvisoAlumnoPage()
         {
             InitializeComponent();
-            
-
-         
         }
     }
 }

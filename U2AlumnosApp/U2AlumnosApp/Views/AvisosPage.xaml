@@ -16,8 +16,9 @@
             <!--FEED DE MENSAJES ENVIADOS-->
             <FlexLayout>
 
-                <StackLayout Padding="0" >
-                    <ListView RowHeight="80"  SelectionMode="None" ItemsSource="{Binding Avisos}">
+                <!--<StackLayout Padding="0" >-->
+                <RefreshView Padding="0" Command="{Binding  AvisosNuevosCommand}" IsRefreshing="{Binding CargandoRefresh}" RefreshColor="#2BE08D">
+                        <ListView RowHeight="80"  SelectionMode="None" ItemsSource="{Binding Avisos}">
 
 
                         <ListView.ItemTemplate>
@@ -73,7 +74,8 @@
 
 
 
-                </StackLayout>
+                    <!--</StackLayout>-->
+                    </RefreshView>
 
 
 

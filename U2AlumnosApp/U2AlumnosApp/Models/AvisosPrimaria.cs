@@ -159,7 +159,7 @@ namespace U2AlumnosApp.Models
 
                     
 
-                    var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisosNuevosByClaveAlumno", new FormUrlEncodedContent(keyClave));
+                    var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisosByClaveAlumno", new FormUrlEncodedContent(keyClave));
                     jsonAvisos.EnsureSuccessStatusCode();
                     List<Aviso> lista = JsonConvert.DeserializeObject<List<Aviso>>(await jsonAvisos.Content.ReadAsStringAsync());
                     if (lista != null)
@@ -258,7 +258,7 @@ namespace U2AlumnosApp.Models
                             FechaRecibido = item.FechaRecibido,
                             ClaveAlumno = alumnoIniciado.ClaveAlumnoIniciado,
                         };
-
+                        await AvisosMaestroRecibido(aviso);
                         connection.Insert(aviso);
                     }
                 }
@@ -269,16 +269,42 @@ namespace U2AlumnosApp.Models
         {
             if (aviso.FechaLeido == null)
             {
-            
-            aviso.FechaLeido = DateTime.Now;
-            aviso.Estatus = 1;
-            HttpClient httpClient = new HttpClient();
-                Dictionary<string, string> keyClave = new Dictionary<string, string>() { { "idAviso", aviso.IdAvisosEnviados.ToString()}, { "fechaRecibido", aviso.FechaRecibido.ToString() } };
 
-            var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisosNuevosByClaveAlumno", new FormUrlEncodedContent(keyClave));
-            jsonAvisos.EnsureSuccessStatusCode();
+                aviso.FechaLeido = DateTime.Now;
+                aviso.Estatus = 2;
+                HttpClient httpClient = new HttpClient();
+                Dictionary<string, string> keyClave =
+                    new Dictionary<string, string>() { { "idAviso", aviso.IdAvisosEnviados.ToString()}, { "fechaLeido", $"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}" } };
+
+                var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisoLeido", new FormUrlEncodedContent(keyClave));
+
+                jsonAvisos.EnsureSuccessStatusCode();
+
+                connection.Update(aviso);
+
             }
             
+        }
+
+        public async Task AvisosMaestroRecibido(Aviso aviso)
+        {
+            if (aviso.FechaRecibido == null)
+            {
+
+                aviso.FechaRecibido = DateTime.Now;
+                aviso.Estatus = 1;
+                HttpClient httpClient = new HttpClient();
+                Dictionary<string, string> keyClave =
+                    new Dictionary<string, string>() { { "idAviso", aviso.IdAvisosEnviados.ToString() }, { "fechaRecibido", $"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}" } };
+
+                var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisoRecibido", new FormUrlEncodedContent(keyClave));
+
+                jsonAvisos.EnsureSuccessStatusCode();
+
+                connection.Update(aviso);
+
+            }
+
         }
 
         public async void AvisosGeneralesUpdate()
@@ -312,5 +338,48 @@ namespace U2AlumnosApp.Models
             
         }
 
+        public async Task<List<Aviso>> GetAvisosNuevosNotif()
+        {
+            HttpClient httpClient = new HttpClient();
+            Dictionary<string, string> keyClave = new Dictionary<string, string>() { { "clave", AlumnoIniciado.ClaveAlumnoIniciado } };
+
+            var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisosNuevosByClaveAlumno", new FormUrlEncodedContent(keyClave));
+            var status = jsonAvisos.EnsureSuccessStatusCode();
+
+            if (status.IsSuccessStatusCode)
+            {
+                List<Aviso> lista = JsonConvert.DeserializeObject<List<Aviso>>(await jsonAvisos.Content.ReadAsStringAsync());
+                if (lista != null)
+                {
+
+                    foreach (var item in lista)
+                    {
+                        if (!VerificarAviso(item.IdAvisosEnviados))
+                        {
+                            Aviso aviso = new Aviso()
+                            {
+                                IdAvisosEnviados = item.IdAvisosEnviados,
+                                Titulo = item.Titulo,
+                                Contenido = item.Contenido,
+                                Estatus = 1,
+                                ClaveMaestro = item.ClaveMaestro,
+                                NombreMaestro = item.NombreMaestro,
+                                FechaEnviar = item.FechaEnviar,
+                                FechaLeido = item.FechaLeido,
+                                FechaRecibido = DateTime.Now,
+                                ClaveAlumno = alumnoIniciado.ClaveAlumnoIniciado,
+                            };
+                            connection.Insert(aviso);
+                        }
+                    }
+                    return lista;
+                }
+                return lista;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
     }

@@ -22,8 +22,6 @@
                     <DataTemplate>
                         <ViewCell >
 
-
-
                             <StackLayout  Padding="10" >
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:Reference vtnAvisoGeneral}, Path= BindingContext.AvisosGeneralesAlumnoCommand}"  CommandParameter="{Binding .}"></TapGestureRecognizer>
