@@ -60,6 +60,7 @@
             <ListView.Footer>
 
                 <StackLayout>
+                    <StackLayout>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AgregarAlumnoCommand}"  ></TapGestureRecognizer>
                     </StackLayout.GestureRecognizers>
@@ -67,6 +68,14 @@
 
                     <Label Padding="10" FontSize="Subtitle" Text="+ Agregar Alumno" TextColor="#2BE08D"></Label>
 
+                    </StackLayout>
+                    <StackLayout>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EliminarAlumnoCommand}"  ></TapGestureRecognizer>
+
+                        </StackLayout.GestureRecognizers>
+                    <Label Padding="10" FontSize="Subtitle" Text="Cerrar Sesión" TextColor="#2BE08D"></Label>
+                    </StackLayout>
 
                 </StackLayout>
 

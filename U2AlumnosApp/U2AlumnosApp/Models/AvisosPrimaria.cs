@@ -52,15 +52,34 @@ namespace U2AlumnosApp.Models
 
         public AlumnoIniciado StartSession()
         {
-            Alumno Alumno = connection.Table<Alumno>().First();
-            AlumnoIniciado alumnoIniciado = new AlumnoIniciado
+
+            Alumno Alumno = connection.Table<Alumno>().FirstOrDefault();
+            if (Alumno == null)
             {
-                ClaveAlumnoIniciado = Alumno.Clave,
-                NombreEscuela = Alumno.NombreEscuela
-            };
-            return alumnoIniciado;
+                return null;
+            }
+            else
+            {
+                AlumnoIniciado alumnoIniciado = new AlumnoIniciado
+                {
+                    ClaveAlumnoIniciado = Alumno.Clave,
+                    NombreEscuela = Alumno.NombreEscuela
+                };
+                return alumnoIniciado;
+
+            }
         }
 
+        public void EliminarAlumno(AlumnoIniciado alumnoIniciado)
+        {
+            Alumno al = connection.Table<Alumno>().FirstOrDefault(x => x.Clave == alumnoIniciado.ClaveAlumnoIniciado);
+            List<Aviso> avisos = connection.Table<Aviso>().Where(x => x.ClaveAlumno == claveAlumnoiniciado).ToList();
+            foreach (var item in avisos)
+            {
+                connection.Delete(item);
+            }
+            connection.Delete(al);
+        }
         public AvisosPrimaria()
         {
             connection = new SQLiteConnection(ruta);
@@ -68,11 +87,11 @@ namespace U2AlumnosApp.Models
             connection.CreateTable<Aviso>();
             connection.CreateTable<Maestro>();
             connection.CreateTable<AvisosGenerales>();
-            
-         
+
+
         }
 
-     
+
         public List<Alumno> GetAlumnosIniciados()
         {
             return new List<Alumno>(connection.Table<Alumno>());
@@ -84,7 +103,7 @@ namespace U2AlumnosApp.Models
         }
         public List<Aviso> GetAvisosEnviados(string id)
         {
-            return new List<Aviso>(connection.Table<Aviso>().Where(x => x.ClaveAlumno == id).OrderByDescending(x=>x.Estatus));
+            return new List<Aviso>(connection.Table<Aviso>().Where(x => x.ClaveAlumno == id).OrderByDescending(x => x.Estatus));
         }
 
         public int CountAlumnos()
@@ -157,7 +176,7 @@ namespace U2AlumnosApp.Models
                     Alumno alumnoReceived = JsonConvert.DeserializeObject<Alumno>(await
                           json.Content.ReadAsStringAsync());
 
-                    
+
 
                     var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisosByClaveAlumno", new FormUrlEncodedContent(keyClave));
                     jsonAvisos.EnsureSuccessStatusCode();
@@ -168,7 +187,7 @@ namespace U2AlumnosApp.Models
                         foreach (var item in lista)
                         {
 
-                   
+
                             Aviso aviso = new Aviso()
                             {
                                 IdAvisosEnviados = item.IdAvisosEnviados,
@@ -184,7 +203,7 @@ namespace U2AlumnosApp.Models
                             };
 
                             connection.Insert(aviso);
-                          
+
                         }
                     }
 
@@ -274,7 +293,7 @@ namespace U2AlumnosApp.Models
                 aviso.Estatus = 2;
                 HttpClient httpClient = new HttpClient();
                 Dictionary<string, string> keyClave =
-                    new Dictionary<string, string>() { { "idAviso", aviso.IdAvisosEnviados.ToString()}, { "fechaLeido", $"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}" } };
+                    new Dictionary<string, string>() { { "idAviso", aviso.IdAvisosEnviados.ToString() }, { "fechaLeido", $"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}" } };
 
                 var jsonAvisos = await httpClient.PostAsync("https://avisosprimaria.itesrc.net/api/AlumnosApp/AvisoLeido", new FormUrlEncodedContent(keyClave));
 
@@ -283,7 +302,7 @@ namespace U2AlumnosApp.Models
                 connection.Update(aviso);
 
             }
-            
+
         }
 
         public async Task AvisosMaestroRecibido(Aviso aviso)
@@ -334,8 +353,8 @@ namespace U2AlumnosApp.Models
                     }
                 }
             }
-          
-            
+
+
         }
 
         public async Task<List<Aviso>> GetAvisosNuevosNotif()
@@ -382,4 +401,4 @@ namespace U2AlumnosApp.Models
             }
         }
     }
-    }
+}

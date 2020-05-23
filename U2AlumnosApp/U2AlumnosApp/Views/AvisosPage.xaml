@@ -18,7 +18,7 @@
 
                 <!--<StackLayout Padding="0" >-->
                 <RefreshView Padding="0" Command="{Binding  AvisosNuevosCommand}" IsRefreshing="{Binding CargandoRefresh}" RefreshColor="#2BE08D">
-                        <ListView RowHeight="80"  SelectionMode="None" ItemsSource="{Binding Avisos}">
+                        <ListView RowHeight="100"  SelectionMode="None" ItemsSource="{Binding Avisos}">
 
 
                         <ListView.ItemTemplate>
@@ -35,8 +35,8 @@
                                         </StackLayout.GestureRecognizers>
                                         <Frame 
        BorderColor="Black"
-       CornerRadius="30"
-   WidthRequest="10"
+       CornerRadius="80"
+   WidthRequest="20"
        IsClippedToBounds="True"
        HorizontalOptions="Center"
        VerticalOptions="Center" >
@@ -48,10 +48,12 @@
          WidthRequest="60" />
                                         </Frame>
 
-                                        <StackLayout Orientation="Vertical" Margin="10" >
+                                        <StackLayout Orientation="Vertical" Margin="10,0,0,0" >
                                            
 
-                                            <Label TextColor="#4D4D4D " FontAttributes="Bold" Text="{Binding NombreMaestro}"  FontSize="Subtitle"></Label>
+                                            <Label TextColor="#4D4D4D " FontAttributes="Bold" Text="{Binding Titulo}"  FontSize="Subtitle"></Label>
+                                            <Label TextColor="#B3B3B3 "  Text="{Binding NombreMaestro}"  FontSize="Subtitle"></Label>
+
                                             <Label TextColor="#B3B3B3 " Text="{Binding Contenido}"  FontSize="Small"></Label>
                                         </StackLayout>
                                     </StackLayout>

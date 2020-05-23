@@ -14,7 +14,9 @@ namespace U2AlumnosApp.ViewModels
 
         public ObservableCollection<Alumno> Alumnos { get; set; }
         public Command<Alumno> AlumnoAvisosCommand { get; set; }
-    
+        public Command EliminarAlumnoCommand { get; set; }
+
+
         List<Alumno> AlumnosApp;
         public MasterDetailViewModel()
         {
@@ -23,6 +25,8 @@ namespace U2AlumnosApp.ViewModels
             AlumnosApp.ForEach(x => Alumnos.Add(x));
             AgregarAlumnoCommand = new Command(AgregarAlumnoIniciado);
             AlumnoAvisosCommand = new Command<Alumno>(AlumnoAvisos);
+            EliminarAlumnoCommand = new Command(EliminarAlumnoIniciado);
+
         }
 
         private void AlumnoAvisos(Alumno alumno)
@@ -40,6 +44,20 @@ namespace U2AlumnosApp.ViewModels
         {
             Login Login = new Login();
             App.Current.MainPage.Navigation.PushAsync(Login);
+        }
+        private void EliminarAlumnoIniciado()
+        {
+            App.AvisosPrim.EliminarAlumno(App.AvisosPrim.AlumnoIniciado);
+            AlumnoIniciado alumno = App.AvisosPrim.StartSession();
+            if (alumno == null)
+            {
+                Login Login = new Login();
+                App.Current.MainPage.Navigation.PushAsync(Login);
+            }
+            else
+            {
+                Application.Current.MainPage = new NavigationPage(new MainPage());
+            }
         }
 
         public Command AgregarAlumnoCommand { get; set; }

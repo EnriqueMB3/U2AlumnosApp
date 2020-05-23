@@ -11,7 +11,7 @@ namespace U2AlumnosApp.Models
 
 		
 		private int idAlumno;
-		[PrimaryKey]
+		[PrimaryKey, AutoIncrement]
 		public int IdAlumno
 		{
 			get { return idAlumno; } 

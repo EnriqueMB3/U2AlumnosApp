@@ -23,20 +23,6 @@ namespace U2AlumnosApp.ViewModels
         public Command ShowCommand { get; set; }
 
 
-        //private InicioSesionAlumno inicioSesionAlumno;
-
-        //public InicioSesionAlumno InicioSesionAlumno
-        //{
-        //    get
-        //    {
-        //        return inicioSesionAlumno;
-        //    }
-        //    set
-        //    {
-        //        inicioSesionAlumno = value; Actualizar();
-
-        //    }
-        //}
 
         private string clave;
 
@@ -110,6 +96,7 @@ namespace U2AlumnosApp.ViewModels
             ShowCommand = new Command(ShowPassword);
             Opacity = 1;
         }
+        public event Action<string> Mensaje;
 
         private void ShowPassword()
         {
@@ -150,6 +137,8 @@ namespace U2AlumnosApp.ViewModels
                 Running = false;
                 Visible = true;
                 Error = ex.Message;
+                Mensaje?.Invoke(ex.Message);
+
             }
         }
     }
